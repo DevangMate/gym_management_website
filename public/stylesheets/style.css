@@ -1,0 +1,45 @@
+*{
+  margin: 0;
+  box-sizing: border-box;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: none;
+}
+#Buildaims{
+  margin-right: 20px;
+  font-size: x-large;
+}
+.menutab{
+  margin: 0px 20px;
+}
+#Login-button{
+  width: 130px;
+}
+.Main{
+  
+  border: 5px solid rgb(255, 0, 0);
+  position: absolute;
+  z-index: 1;
+  background-image: url(/images/wallpaperflare-cropped.jpg);
+  -webkit-background-size: cover;
+  background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  height: 100vh;
+}
+.Main::before{
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  background-color: rgba(0,0,0,60%);
+}
+.home-content{
+  border: 3px solid white;
+  color:white;
+  font-size: 45px;
+  margin: 25px;
+}
