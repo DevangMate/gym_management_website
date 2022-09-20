@@ -1,12 +1,10 @@
 var express = require('express');
 var router = express.Router();
-
-router.get('/', function(req, res, next) {
+const admincontroller=require("../controllers/admincontroller")
+const AdminAuth=require("../middleware/adminAuth")
+router.get('/',AdminAuth.islogin, function(req, res, next) {
     res.render('dashboard');
   });
 
-router.get('/user',function(req, res, next) {
-    res.render('user');
-  })
-
+router.get('/logout',AdminAuth.islogin,admincontroller.logout);
   module.exports = router;
