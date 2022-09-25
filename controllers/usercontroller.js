@@ -1,4 +1,4 @@
-const Admin =require("../models/admin");
+const User =require("../models/user");
 var session=require('express-session')
 
 const verifyLogin= async(req,res)=>{
@@ -6,14 +6,22 @@ const verifyLogin= async(req,res)=>{
         const UserID=req.body.UserID;
         const Password=req.body.Password;
 
-        const Userdata=await Admin.findOne({UserID:UserID});
-        req.session.user_id= Userdata?.UserID;
+        const Userdata=await User.findOne({UserID:UserID});
+        // req.session.user_id= Userdata?.UserID;
         // req.session.user_id=req.session.sessionuserid;
         if (Userdata?.Password== Password) {    
             const sessionuserid= Userdata?._id;
-            req.session.user_idw=sessionuserid;
+            req.session.user_id=sessionuserid;
+            req.session.is_admin=Userdata?.is_admin;
             
-            res.status(201).redirect("/dashboard")
+            if(Userdata?.is_admin==1) {
+                
+                res.status(201).redirect("/dashboard");
+            }
+            else{
+                res.status(201).redirect("/userdashboard")
+            }
+            
            
             
             
@@ -34,14 +42,22 @@ const loadDashboard= async(req,res)=>{
         console.log(error.message);
     }
 }
+const loaduserDashboard= async(req,res)=>{
+    try {
+        res.render('userdashboard');
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 
 
 
 const logout =async(req,res)=>{
     try {
         
-        // req.session.destroy();
-        res.redirect('login')
+        req.session.destroy();
+
+        res.redirect('/login');
     } catch (error) {
         console.log(error.message)
     }
@@ -52,5 +68,6 @@ const logout =async(req,res)=>{
 module.exports={
     verifyLogin,
     loadDashboard,
+    loaduserDashboard,
     logout
 };

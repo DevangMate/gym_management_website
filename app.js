@@ -7,13 +7,13 @@ var bodyParser = require('body-parser')
 var session=require('express-session');
 const config=require('./config/config')
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var userdashboardRouter = require('./routes/userdashboard');
 var loginRouter = require('./routes/login');
 var dashboardRouter=require('./routes/dashboard')
 
 
 // models
-var Admin=require("./models/admin");
+var User=require("./models/user");
 
 
 // express app specific code
@@ -36,7 +36,7 @@ app.use(session({secret:config.sessionSecret,
   saveUninitialized: true}));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/userdashboard', userdashboardRouter);
 app.use('/login', loginRouter);
 app.use("/dashboard",dashboardRouter)
 

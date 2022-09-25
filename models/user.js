@@ -1,6 +1,6 @@
 const mongoose=require("mongoose");
 // defining schema
-const AdminSchema= new mongoose.Schema(
+const UserSchema= new mongoose.Schema(
     {
         UserID:{
             type:String,
@@ -9,10 +9,14 @@ const AdminSchema= new mongoose.Schema(
         Password:{
             type:String,
             required:true,
+        },
+        is_admin:{
+            type:Number,
+            required:true,
         }
     }
 )
 //  creating models or collections
- const Admin =mongoose.model("Admin",AdminSchema);
+ const User =mongoose.model("User",UserSchema);
 
- module.exports=Admin;
+ module.exports=User;
