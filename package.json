@@ -6,20 +6,28 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.20.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+    "dotenv": "^16.0.3",
     "express": "~4.16.1",
+    "express-handlebars": "^6.0.6",
     "express-session": "^1.17.3",
+    "handlebars-helpers": "^0.10.0",
     "hbs": "~4.0.4",
     "http-errors": "~1.6.3",
     "mongoose": "^6.6.0",
     "morgan": "~1.9.1",
+    "nodemon": "^2.0.20",
     "passport": "^0.6.0"
   },
   "description": "this is project for build aims gym in virar",
   "main": "app.js",
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jquery": "^3.5.14"
+  }
 }

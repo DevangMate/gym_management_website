@@ -1,6 +1,8 @@
 var createError = require('http-errors');
+var fs = require('fs');
 var express = require('express');
 var path = require('path');
+const morgan=require('morgan')
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser = require('body-parser')
@@ -10,31 +12,60 @@ var indexRouter = require('./routes/index');
 var userdashboardRouter = require('./routes/userdashboard');
 var loginRouter = require('./routes/login');
 var dashboardRouter=require('./routes/dashboard')
-
-
+var exphbs = require('express-handlebars');
+// var hbsd=require('express-handlebars')
+var helpers = require('handlebars-helpers');
+var hbs=require('hbs')
+var multihelpers=helpers();
 // models
 var User=require("./models/user");
+// const Handlebars  = require('hbs');
+const { equal } = require('assert');
 
 
+hbs.registerHelper('eq', function (a, b, options) {
+  if (a == b) { return options.fn(this); }
+  return options.inverse(this);
+});
+
+hbs.registerHelper('noteq', function (a, b, options) {
+  if (a != b) { return options.fn(this); }
+  return options.inverse(this);
+});
+hbs.registerPartials(path.join(__dirname, 'views', 'partials'));
+const expresshbs=exphbs.create({
+    helpers: multihelpers,
+    
+    extname: ".hbs",
+    layoutsDir:  path.join(__dirname, 'views'),
+    defaultLayout: "layout"
+})
 // express app specific code
 var app = express();
 // connecting mongo
 require("./db/conn");
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.engine(
+  "handlebars",expresshbs.engine
+  
+);
+
+var partial=hbs.registerPartials(path.join(__dirname, 'views', 'partials'));
+// app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
+app.use(morgan('tiny'));
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(session({secret:config.sessionSecret,
   resave: true,
   saveUninitialized: true}));
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', indexRouter);
 app.use('/userdashboard', userdashboardRouter);
 app.use('/login', loginRouter);

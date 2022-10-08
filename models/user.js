@@ -4,7 +4,12 @@ const UserSchema= new mongoose.Schema(
     {
         UserID:{
             type:String,
-            required:true
+            required:true,
+            unique:true,
+        },
+        Name:{
+            type:String,
+            required:true,
         },
         Password:{
             type:String,
@@ -13,7 +18,23 @@ const UserSchema= new mongoose.Schema(
         is_admin:{
             type:Number,
             required:true,
+        },
+        email:{
+            type:String,
+            required:true,
+            unique:true,
+        },
+        Gender:{
+            type:String,
+            required:true,
+            
+        },
+        Status:{
+            type:String,
+            required:true,
         }
+
+
     }
 )
 //  creating models or collections
