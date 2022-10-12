@@ -1,7 +1,7 @@
 
 const islogin= async(req,res,next)=>{
     try {
-        if(req.session.user_id && req.session.is_admin==0 && req.session.is_trainer==0){
+        if(req.session.user_id && req.session.is_admin==0 && req.session.is_trainer==1){
 
         }
         else{
@@ -16,8 +16,8 @@ const islogin= async(req,res,next)=>{
 
 const islogout= async(req,res,next)=>{
     try {
-        if(req.session.user_id  && req.session.is_admin==0 && req.session.is_trainer==0){
-            res.redirect('userdashboard');
+        if(req.session.user_id  && req.session.is_admin==0 && req.session.is_trainer==1){
+            res.redirect('trainerdashboard');
         }
         next()
     } catch (error) {

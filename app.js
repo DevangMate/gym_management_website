@@ -9,6 +9,7 @@ var bodyParser = require('body-parser')
 var session=require('express-session');
 const config=require('./config/config')
 var indexRouter = require('./routes/index');
+var trainerdashboardRouter=require('./routes/trainerdashboard')
 var userdashboardRouter = require('./routes/userdashboard');
 var loginRouter = require('./routes/login');
 var dashboardRouter=require('./routes/dashboard')
@@ -69,7 +70,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', indexRouter);
 app.use('/userdashboard', userdashboardRouter);
 app.use('/login', loginRouter);
-app.use("/dashboard",dashboardRouter)
+app.use("/dashboard",dashboardRouter);
+app.use('/trainerdashboard',trainerdashboardRouter);
 
 
 // catch 404 and forward to error handler

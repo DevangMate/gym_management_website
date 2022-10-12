@@ -14,6 +14,7 @@ const CreateMember=async(req,res)=>{
     Name:req.body.Name,
     Password:req.body.Password,
     is_admin:0,
+    is_trainer:0,
     email:req.body.email,
     Gender:req.body.Gender,
     Status:req.body.Status
@@ -49,7 +50,7 @@ const FindMember=async(req,res)=>{
     })
  }   
  else{
- User.find({is_admin:0})
+ User.find({is_admin:0,is_trainer:0})
  .then(user=>{
    res.send(user)
  })

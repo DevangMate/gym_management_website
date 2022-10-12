@@ -19,6 +19,10 @@ const UserSchema= new mongoose.Schema(
             type:Number,
             required:true,
         },
+        is_trainer:{
+            type:Number,
+            required:false,
+        },
         email:{
             type:String,
             required:true,
