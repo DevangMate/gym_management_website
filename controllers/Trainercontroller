@@ -32,3 +32,10 @@ Trainer.save(Trainer)
     });
  })
 }
+
+
+
+module.exports={
+   CreateTrainer,
+   
+};

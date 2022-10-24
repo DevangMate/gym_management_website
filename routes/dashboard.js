@@ -3,7 +3,8 @@ var router = express.Router();
 const usercontroller=require("../controllers/usercontroller")
 const AdminAuth=require("../middleware/AdminAuth");
 const Membercontroller=require("../controllers/Membercontroller");
-const Trainercontroller=require("../controllers/");
+
+const TrainerController=require("../controllers");
 const axios=require('axios').default;
 
 
@@ -90,6 +91,6 @@ router.get('/Trainers/add_Trainer',AdminAuth.islogin,function(req, res, next) {
 
 
 // API
-router.post('/Trainers/api/users',Membercontroller.CreateMember);
+router.post('/Trainers/api/users',TrainerController.CreateTrainer);
   module.exports = router;
 
