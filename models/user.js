@@ -7,6 +7,15 @@ const UserSchema= new mongoose.Schema(
             required:true,
             unique:true,
         },
+        Height:{
+            type:Number,
+
+        },
+        Weight:{
+            type:Number,
+
+        },
+
         Name:{
             type:String,
             required:true,
@@ -28,6 +37,7 @@ const UserSchema= new mongoose.Schema(
             required:true,
             unique:true,
         },
+        Client:[[]],
         Gender:{
             type:String,
             required:true,

@@ -11,4 +11,7 @@ router.get('/', TrainerAuth.islogin,function(req, res, next) {
 });
 router.get('/logout',TrainerAuth.islogin,usercontroller.logout);
 
+
+
 module.exports = router;
+

@@ -3,6 +3,7 @@ var router = express.Router();
 const usercontroller=require("../controllers/usercontroller")
 const AdminAuth=require("../middleware/AdminAuth");
 const Membercontroller=require("../controllers/Membercontroller");
+const Trainercontroller=require("../controllers/");
 const axios=require('axios').default;
 
 
@@ -19,7 +20,7 @@ router.get('/',AdminAuth.islogin, function(req, res, next) {
 
 router.get('/logout',AdminAuth.islogin,usercontroller.logout);
 
-
+// Member
 /**
  * @description Membermenu Route
  * @method GET/
@@ -71,5 +72,24 @@ router.put('/Members/api/users/:id',Membercontroller.UpdateMember);
 router.delete('/Members/api/users/:id',Membercontroller.DeleteMember);
 
 
+
+// Trainer
+
+router.get('/Trainers',AdminAuth.islogin,function(req, res, next){
+  res.render('Trainers')
+}),
+
+
+// adding trainer
+router.get('/Trainers/add_Trainer',AdminAuth.islogin,function(req, res, next) {
+  res.render('addTrainer');
+});
+
+
+
+
+
+// API
+router.post('/Trainers/api/users',Membercontroller.CreateMember);
   module.exports = router;
 
