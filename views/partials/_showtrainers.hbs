@@ -1,4 +1,4 @@
-{{#each members}}
+{{#each trainers}}
 
 <tr>
     <td>{{UserID}}</td>
@@ -7,7 +7,11 @@
     <td>{{Gender}}</td>
     <td>{{Status}}</td>
     <td>
-        <a href="/dashboard/Members/update_member?id={{_id}}" class="btn border-shadow update">
+        <span>{{Client}}</span>
+        
+    </td>
+    <td>
+        <a href="/dashboard/Trainers/update_trainer?id={{_id}}" class="btn border-shadow update">
             <span class="text-gradient"><i class="fa-solid fa-pencil"></i></span>
         </a>
         <a class="btn border-shadow delete" data-id="{{_id}}">

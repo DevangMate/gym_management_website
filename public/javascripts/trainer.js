@@ -3,19 +3,19 @@ $("#add_user").submit(function(event){
     alert("Data Inserted Successfully!");
 })
 
-$("#update_user").submit(function(event){
+$("#update_trainer").submit(function(event){
     event.preventDefault();
 // storing data into variable
     var unindexed_array = $(this).serializeArray();
     var data = {}
-    console.log(unindexed_array)
+
     $.map(unindexed_array, function(n, i){
         data[n['name']] = n['value']
     })
 
 
     var request = {
-        "url" : `http://localhost:3000/dashboard/Members/api/users/${data.id}`,
+        "url" : `http://localhost:3000/dashboard/Trainers/api/trainers/${data.id}`,
         "method" : "PUT",
         "data" : data
     }
@@ -26,19 +26,19 @@ $("#update_user").submit(function(event){
 
 })
 
-if(window.location.pathname=="/dashboard/Members"){
+if(window.location.pathname=="/dashboard/Trainers"){
     $ondelete = $(".table tbody td a.delete");
     $ondelete.click(function(){
         var id = $(this).attr("data-id")
 
         var request = {
-            "url" : `http://localhost:3000/dashboard/Members/api/users/${id}`,
+            "url" : `http://localhost:3000/dashboard/Trainers/api/trainers/${id}`,
             "method" : "DELETE"
         }
 
-        if(confirm("Are u sure u want to delete this member?")){
+        if(confirm("Are u sure u want to delete this Trainer?")){
             $.ajax(request).done(function(response){
-                alert("Member  Deleted Successfully!");
+                alert("Trainer  Deleted Successfully!");
                 location.reload();
             })
         }

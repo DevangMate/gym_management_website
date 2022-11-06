@@ -4,7 +4,7 @@ const usercontroller=require("../controllers/usercontroller")
 const AdminAuth=require("../middleware/AdminAuth");
 const Membercontroller=require("../controllers/Membercontroller");
 
-const TrainerController=require("../controllers");
+const TrainerController=require("../controllers/Trainercontroller");
 const axios=require('axios').default;
 
 
@@ -36,6 +36,7 @@ router.get('/Members',AdminAuth.islogin,function(req, res, next) {
    .catch(err=>{
     res.send(err);
    })
+   
   
 });
 
@@ -77,7 +78,15 @@ router.delete('/Members/api/users/:id',Membercontroller.DeleteMember);
 // Trainer
 
 router.get('/Trainers',AdminAuth.islogin,function(req, res, next){
-  res.render('Trainers')
+  axios.get('http://localhost:3000/dashboard/Trainers/api/trainers')
+  .then(function(response){
+   
+   res.render('Trainers',{trainers:response.data});
+  
+  })
+  .catch(err=>{
+   res.send(err);
+  })
 }),
 
 
@@ -85,12 +94,30 @@ router.get('/Trainers',AdminAuth.islogin,function(req, res, next){
 router.get('/Trainers/add_Trainer',AdminAuth.islogin,function(req, res, next) {
   res.render('addTrainer');
 });
+// Updating Trainer
+router.get('/Trainers/update_trainer',AdminAuth.islogin,function(req, res, next) {
+  axios.get('http://localhost:3000/dashboard/Trainers/api/trainers', { params : { id : req.query.id }})
+  .then(function(trainerdata){
+    
+    res.render('updatetrainer',{trainer:trainerdata.data});
+  })
+  .catch(err =>{
+    res.send(err);
+})
+  
+});
 
 
 
 
 
 // API
-router.post('/Trainers/api/users',TrainerController.CreateTrainer);
+router.post('/Trainers/api/trainers',TrainerController.CreateTrainer);
+
+router.get('/Trainers/api/trainers',TrainerController.FindTrainer);
+
+router.put('/Trainers/api/trainers/:id',TrainerController.UpdateTrainer);
+
+router.delete('/Trainers/api/trainers/:id',TrainerController.DeleteTrainer);
   module.exports = router;
 

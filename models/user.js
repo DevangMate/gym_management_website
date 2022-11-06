@@ -1,57 +1,60 @@
-const mongoose=require("mongoose");
+const { type } = require("jquery");
+const mongoose = require("mongoose");
 // defining schema
-const UserSchema= new mongoose.Schema(
+const UserSchema = new mongoose.Schema(
     {
-        UserID:{
-            type:String,
-            required:true,
-            unique:true,
+        UserID: {
+            type: String,
+            required: true,
+            unique: true,
         },
-        Height:{
-            type:Number,
+        Height: {
+            type: Number,
 
         },
-        Weight:{
-            type:Number,
+        Weight: {
+            type: Number,
 
         },
 
-        Name:{
-            type:String,
-            required:true,
+        Name: {
+            type: String,
+            required: true,
         },
-        Password:{
-            type:String,
-            required:true,
+        Password: {
+            type: String,
+            required: true,
         },
-        is_admin:{
-            type:Number,
-            required:true,
+        is_admin: {
+            type: Number,
+            required: true,
         },
-        is_trainer:{
-            type:Number,
-            required:false,
+        is_trainer: {
+            type: Number,
+            required: false,
         },
-        email:{
-            type:String,
-            required:true,
-            unique:true,
+        email: {
+            type: String,
+            required: true,
+            unique: true,
         },
-        Client:[[]],
-        Gender:{
-            type:String,
-            required:true,
-            
+        Client: {
+            type: Array,
         },
-        Status:{
-            type:String,
-            required:true,
+        Gender: {
+            type: String,
+            required: true,
+
+        },
+        Status: {
+            type: String,
+            required: true,
         }
 
 
     }
 )
 //  creating models or collections
- const User =mongoose.model("User",UserSchema);
+const User = mongoose.model("User", UserSchema);
 
- module.exports=User;
+module.exports = User;

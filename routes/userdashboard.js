@@ -9,6 +9,9 @@ const UserAuth=require("../middleware/UserAuth")
 router.get('/', UserAuth.islogin,function(req, res, next) {
   res.render('userdashboard');
 });
+router.get('/Analytics', UserAuth.islogin,function(req, res, next) {
+  res.render('useranalytics.hbs');
+});
 router.get('/logout',UserAuth.islogin,usercontroller.logout);
 
 module.exports = router;
