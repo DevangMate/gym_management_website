@@ -48,7 +48,8 @@ const loadDashboard= async(req,res)=>{
 }
 const loaduserDashboard= async(req,res)=>{
     try {
-        res.render('userdashboard');
+        const userData= await User.findById({_id:req.session.user_id});
+        res.render('userdashboard',{user:userData});
     } catch (error) {
         console.log(error.message);
     }
@@ -76,10 +77,12 @@ const logout =async(req,res)=>{
 }
 
 
+
 module.exports={
     verifyLogin,
     loadDashboard,
     loaduserDashboard,
     loadtrainerDashboard,
     logout
+    
 };

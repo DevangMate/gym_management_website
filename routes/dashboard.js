@@ -3,12 +3,13 @@ var router = express.Router();
 const usercontroller=require("../controllers/usercontroller")
 const AdminAuth=require("../middleware/AdminAuth");
 const Membercontroller=require("../controllers/Membercontroller");
-
+const Attendancecontroller=require("../controllers/attendancecontroller")
 const TrainerController=require("../controllers/Trainercontroller");
 const axios=require('axios').default;
 
 
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
+const attendance = require('../models/attendance');
 router.use(bodyParser.json())
 router.use(bodyParser.urlencoded({extended: false}));
 /**
@@ -119,5 +120,29 @@ router.get('/Trainers/api/trainers',TrainerController.FindTrainer);
 router.put('/Trainers/api/trainers/:id',TrainerController.UpdateTrainer);
 
 router.delete('/Trainers/api/trainers/:id',TrainerController.DeleteTrainer);
-  module.exports = router;
+
+
+//attendance
+
+router.get('/Attendance', function (req, res) {
+  const queryDate = req.query.date;
+  axios.get('http://localhost:3000/dashboard/Attendance/api/attendances', { params: { date: req.query.date} })
+  .then(function(response){
+    
+    
+    res.render('attendance', { attendances: response.data });
+    
+    })
+    .catch(err =>{
+    res.send(err);
+    });
+    });
+
+
+//API
+router.post('/Attendance/api/attendance',Attendancecontroller.Markattendance);
+router.get('/Attendance/api/attendances',Attendancecontroller.Getattendancebydate);
+
+module.exports = router;
+
 

@@ -19,6 +19,7 @@ var helpers = require('handlebars-helpers');
 var hbs=require('hbs')
 var multihelpers=helpers();
 // models
+var attendance=require("./models/attendance");
 var User=require("./models/user");
 // const Handlebars  = require('hbs');
 const { equal } = require('assert');

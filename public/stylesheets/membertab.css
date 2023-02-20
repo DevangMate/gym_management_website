@@ -159,8 +159,8 @@ table{
     margin: .4em 0;
 }
 
-#update_trainer .form-group input[type="text"], input[type="password"], #update_user .form-group input[type="text"], input[type="password"],
-#add_user .form-group input[type="text"], input[type="password"] {
+#update_trainer .form-group input[type="text"], input[type="password"],input[type="number"],input[type="date"], #update_user .form-group input[type="text"], input[type="password"],input[type="number"],input[type="date"],
+#add_user .form-group input[type="text"], input[type="password"], input[type="number"],input[type="date"] {
     width: 100%;
     padding: .6em 1em;
     margin: .5em 0;

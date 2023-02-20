@@ -8,6 +8,7 @@ const CreateMember=async(req,res)=>{
     res.status(400).send({message:"content cant be empty"});
     return;
  }
+
 //  new user
  const Member=new User({
     UserID:req.body.UserID,
@@ -15,13 +16,34 @@ const CreateMember=async(req,res)=>{
     Password:req.body.Password,
     is_admin:0,
     is_trainer:0,
+    Height:req.body.Height,
+    Weight:req.body.Weight,
+    BirthDate:req.body.BirthDate,
+    Phone:req.body.Phone,
+    AlternatePhone:req.body.AlternatePhone,
+    Address:req.body.Address,
     email:req.body.email,
     Gender:req.body.Gender,
     Status:req.body.Status
  })
 
+
+ 
  // @ts-ignore
- Member.save(Member)
+ Member.save({ UserID:req.body.UserID,
+    Name:req.body.Name,
+    Password:req.body.Password,
+    is_admin:0,
+    is_trainer:0,
+    Height:req.body.Height,
+    Weight:req.body.Weight,
+    BirthDate:req.body.BirthDate,
+    Phone:req.body.Phone,
+    AlternatePhone:req.body.AlternatePhone,
+    Address:req.body.Address,
+    email:req.body.email,
+    Gender:req.body.Gender,
+    Status:req.body.Status})
  .then(data=>{
     res.redirect('/dashboard/Members/add_member')
  })

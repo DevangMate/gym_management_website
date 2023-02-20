@@ -8,7 +8,7 @@ $("#update_user").submit(function(event){
 // storing data into variable
     var unindexed_array = $(this).serializeArray();
     var data = {}
-    console.log(unindexed_array)
+    
     $.map(unindexed_array, function(n, i){
         data[n['name']] = n['value']
     })
