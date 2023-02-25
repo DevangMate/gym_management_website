@@ -125,12 +125,12 @@ router.delete('/Trainers/api/trainers/:id',TrainerController.DeleteTrainer);
 //attendance
 
 router.get('/Attendance', function (req, res) {
-  const queryDate = req.query.date;
-  axios.get('http://localhost:3000/dashboard/Attendance/api/attendances', { params: { date: req.query.date} })
+  
+  axios.get('http://localhost:3000/dashboard/Attendance/api/attendances')
   .then(function(response){
     
     
-    res.render('attendance', { attendances: response.data });
+    res.render('attendance', { attendance: response.data });
     
     })
     .catch(err =>{

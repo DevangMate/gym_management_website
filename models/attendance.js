@@ -23,12 +23,13 @@ const attendanceSchema = new mongoose.Schema(
 
 attendanceSchema.virtual("formattedDate").get(function() {
   const date = this.date;
-  return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+  const formattedDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+  return formattedDate;
 });
 
 attendanceSchema.virtual("formattedTime").get(function() {
   const date = this.date;
-  return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+  return date.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
 });
 
 //  creating models or collections

@@ -41,20 +41,23 @@ const Markattendance = async(req,res)=>{
 }
 
 }
-const Getattendancebydate= async(req,res)=>{
-  let queryDate = req.params.date;
-  attendance.find({ formattedDate: queryDate })
-  .populate('User')
-  .exec((err, attendance) => {
-    if (err) return res.status(400).send(err);
-    
-    res.send(attendance);
-  });
-
-  
-
+const Getattendancebydate= async (req, res) => {
+  try {
+    const today = new Date();
+    const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const endOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+    const data = await attendance.find({
+      date: {
+        $gte: startOfDay,
+        $lt: endOfDay
+      }
+    }).populate('User');
+    res.send(data);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Server error');
+  }
 }
-
 
 
 module.exports={
