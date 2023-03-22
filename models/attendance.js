@@ -18,7 +18,9 @@ const attendanceSchema = new mongoose.Schema(
     },
     
   }, {
-  timestamps: true
+  timestamps: true,
+  toObject: { virtuals: true },
+    toJSON: { virtuals: true }
 });
 
 attendanceSchema.virtual("formattedDate").get(function() {
@@ -29,7 +31,8 @@ attendanceSchema.virtual("formattedDate").get(function() {
 
 attendanceSchema.virtual("formattedTime").get(function() {
   const date = this.date;
-  return date.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  const formattedTime= date.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  return formattedTime
 });
 
 //  creating models or collections

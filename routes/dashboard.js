@@ -5,6 +5,7 @@ const AdminAuth=require("../middleware/AdminAuth");
 const Membercontroller=require("../controllers/Membercontroller");
 const Attendancecontroller=require("../controllers/attendancecontroller")
 const TrainerController=require("../controllers/Trainercontroller");
+const Membershipplancontroller=require("../controllers/plancontroller")
 const axios=require('axios').default;
 
 
@@ -142,6 +143,46 @@ router.get('/Attendance', function (req, res) {
 //API
 router.post('/Attendance/api/attendance',Attendancecontroller.Markattendance);
 router.get('/Attendance/api/attendances',Attendancecontroller.Getattendancebydate);
+
+//plan
+router.get('/Plans',AdminAuth.islogin,function(req, res, next) {
+  axios.get('http://localhost:3000/dashboard/Plans/api/plans')
+   .then(function(response){
+    
+    res.render('Plan',{plans:response.data});
+   
+   })
+   .catch(err=>{
+    res.send(err);
+   })
+   
+  
+});
+router.get('/Plans/add_plan',AdminAuth.islogin,function(req, res, next) {
+  res.render('addPlan');
+});
+router.get('/Plans/update_plan',AdminAuth.islogin,function(req, res, next) {
+  axios.get('http://localhost:3000/dashboard/Plans/api/plans', { params : { id : req.query.id }})
+  .then(function(plandata){
+    
+    res.render('updatePlans',{plan:plandata.data});
+  })
+  .catch(err =>{
+    res.send(err);
+})
+  
+});
+
+//PLAN API
+// API
+router.post('/Plans/api/plans',Membershipplancontroller.CreateMembershipPlan);
+
+router.get('/Plans/api/plans',Membershipplancontroller.FindPlan);
+
+router.put('/Plans/api/plans/:id',Membershipplancontroller.UpdatePlan);
+
+router.delete('/Plans/api/plans/:id',Membershipplancontroller.DeletePlan);
+
 
 module.exports = router;
 

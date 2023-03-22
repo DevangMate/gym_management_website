@@ -1,6 +1,7 @@
 const { type } = require("jquery");
 const moment = require("moment")
 const mongoose = require("mongoose");
+
 // defining schema
 const UserSchema = new mongoose.Schema(
     {
