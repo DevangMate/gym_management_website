@@ -7,12 +7,12 @@ const CreateMembershipPlan=async (req, res, next) => {
         res.status(400).send({ message: "content cant be empty" });
         return;
       }
-    const { Name, Price, Duration } = req.body; // assuming your form inputs are named 'name', 'price', and 'duration'
+    const {  MembershipName, Price, Duration } = req.body; // assuming your form inputs are named 'name', 'price', and 'duration'
   
     
       // create a new membership plan object with the form data
       const membershipPlan = new MembershipPlan({
-        Name,
+        MembershipName,
         Price,
         Duration
       });

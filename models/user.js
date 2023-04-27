@@ -1,6 +1,7 @@
 const { type } = require("jquery");
 const moment = require("moment")
 const mongoose = require("mongoose");
+const MembershipPlan=require("../models/plan")
 
 // defining schema
 const UserSchema = new mongoose.Schema(
@@ -68,14 +69,53 @@ const UserSchema = new mongoose.Schema(
             required: true,
 
         },
+        MembershipPlan: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'MembershipPlan',
+            required: true,
+        },
+        MembershipStartDate: {
+            type: Date,
+            // required: true,
+            
+        },
+        MembershipEndDate: {
+            type: Date,
+            // required: true,
+        },
         Status: {
             type: String,
-            required: true,
+            // required: true,
         }
 
 
     }
 );
+UserSchema.pre('save', async function (next) {
+    const user = this;
+  
+    if (user.MembershipPlan && user.MembershipStartDate) {
+      const membershipPlan = await MembershipPlan.findById(user.MembershipPlan);
+      const days = membershipPlan?.Duration;
+      const startDate = user.MembershipStartDate;
+      const endDate = moment(startDate).add(days, 'days').toDate();
+      user.MembershipEndDate = endDate;
+  
+      const today = new Date();
+      if (endDate < today) {
+        user.Status = 'Inactive';
+      } else {
+        user.Status = 'Active';
+      }
+    } else {
+      user.Status = 'Inactive';
+    }
+  
+    next();
+  });
+  
+
+
 UserSchema.virtual("age").get(function () {
     const today = new Date();
     const birthdate = this.BirthDate;

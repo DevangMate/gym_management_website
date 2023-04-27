@@ -1,4 +1,15 @@
+// const data  = require("../../controllers/usercontroller");
+// const currentYear = new Date().getFullYear();
+//     const currentYearSalesData = data.getMonthlySalesData(currentYear);
+
+//     // Get the previous year's sales data
+//     const previousYear = currentYear - 1;
+//     const previousYearSalesData = data.getMonthlySalesData(previousYear);
+
 // ---------- CHARTS ----------
+
+// const salesData = JSON.parse(decodeURIComponent(document.currentScript.getAttribute('data-sales-data')));
+// const salesData = JSON.parse(decodeURIComponent("{{salesData}}"));
 
 // BAR CHART
 var barChartOptions = {
@@ -117,10 +128,10 @@ var barChartOptions = {
   var areaChartOptions = {
     series: [{
       name: "Previous year",
-      data: [31, 40, 28, 51, 42, 109, 100],
+      data: [6000,3000,5000,2000,3000,1000,2000,4000,1200,5300,2200,8400]
     }, {
       name: "Current Year",
-      data: [11, 32, 45, 32, 34, 52, 41],
+      data: [5000,2000,5000,2000,8000,1600,2500,4500,2200,3300,2200,3500]
     }],
     chart: {
       type: "area",
@@ -132,7 +143,7 @@ var barChartOptions = {
       },
     },
     colors: ["#00ab57", "#d50000"],
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul","Aug","Sept","Oct","Nov","Dec"],
     dataLabels: {
       enabled: false,
     },

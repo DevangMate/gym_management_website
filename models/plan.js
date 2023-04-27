@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const membershipPlanSchema = new mongoose.Schema({
-  Name: {
+  MembershipName: {
     type: String,
     required: true,
   },
