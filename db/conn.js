@@ -1,10 +1,12 @@
 const mongoose=require("mongoose");
+const dotenv=require('dotenv');
+dotenv.config({path:'config.env'})
 mongoose.set('strictQuery', false);
 main().catch(err => console.log(err));
 
 async function main() {
     
-    await mongoose.connect('mongodb+srv://matedevang532003:DJMATE2003@cluster0.wld7ojm.mongodb.net/BuildAims-FitnessZone?retryWrites=true&w=majority',
+    await mongoose.connect(process.env.MONGO_URI,
     (err)=>{
         if(err){
             console.log(err)
