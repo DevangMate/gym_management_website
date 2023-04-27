@@ -12,9 +12,9 @@ const CreateMembershipPlan=async (req, res, next) => {
     
       // create a new membership plan object with the form data
       const membershipPlan = new MembershipPlan({
-        MembershipName,
-        Price,
-        Duration
+        MembershipName:MembershipName,
+        Price:Price,
+        Duration:Duration,
       });
   
       // save the membership plan to the database
@@ -46,7 +46,7 @@ const CreateMembershipPlan=async (req, res, next) => {
          })
       }   
       else{
-        MembershipPlan.find({is_admin:0,is_trainer:0})
+        MembershipPlan.find()
       .then(Plan=>{
         res.send(Plan)
       })

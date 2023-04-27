@@ -19,6 +19,9 @@
 .modal-header{
     background-image: linear-gradient(to right, #74F2CE, #c3fdf2);
 }
-.entry{
+.active{
     background-color: #74F2CE;
+}
+.inactive{
+    background-color: #e48a8a;
 }

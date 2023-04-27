@@ -37,7 +37,7 @@ if(window.location.pathname=="/dashboard/Plans"){
 
         if(confirm("Are u sure u want to delete this Trainer?")){
             $.ajax(request).done(function(response){
-                alert("Trainer  Deleted Successfully!");
+                alert("plan Deleted Successfully!");
                 location.reload();
             })
         }

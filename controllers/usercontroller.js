@@ -113,70 +113,100 @@ const getAnalysisData = async (req, res) => {
 const express = require('express');
 const router = express.Router();
 
-const getMonthlySalesData = async (year) => {
-  // Get the start and end date of the year
-  const startDate = moment(year, "YYYY").startOf("year").toDate();
-  const endDate = moment(year, "YYYY").endOf("year").toDate();
+const getMonthlyCustomerData = async () => {
+  try {
+    // Get current year and previous year
+    const currentYear = new Date().getFullYear();
+    const previousYear = currentYear - 1;
 
-  // Get the monthly sales data for the given year
-  const salesData = await User.aggregate([
-    // Match users with membership plans
-    {
-      $match: {
-        MembershipPlan: { $exists: true }
-      }
-    },
-    // Unwind the membership plans array
-    {
-      $unwind: "$MembershipPlan"
-    },
-    // Match membership plans with membership start date in the given year
-    {
-      $match: {
-        "MembershipPlan.MembershipStartDate": {
-          $gte: startDate,
-          $lte: endDate
+    // Get the monthly customer count for the current year
+    const currentYearCustomerData = await User.aggregate([
+      // Match users with membership plans
+      {
+        $match: {
+          MembershipPlan: { $exists: true }
         }
+      },
+      // Unwind the membership plans array
+      {
+        $unwind: "$MembershipPlan"
+      },
+      // Match membership plans with membership start date in current year
+      {
+        $match: {
+          "MembershipPlan.MembershipStartDate": {
+            $gte: new Date(currentYear, 0, 1),
+            $lte: new Date(currentYear, 11, 31, 23, 59, 59, 999)
+          }
+        }
+      },
+      // Group by month and count the number of customers
+      {
+        $group: {
+          _id: { $month: "$MembershipPlan.MembershipStartDate" },
+          count: { $sum: 1 }
+        }
+      },
+      // Sort the customer data by month
+      {
+        $sort: { _id: 1 }
       }
-    },
-    // Group by month and calculate the total sales
-    {
-      $group: {
-        _id: { $month: "$MembershipPlan.MembershipStartDate" },
-        sales: { $sum: "$MembershipPlan.Price" }
+    ]);
+
+    // Get the monthly customer count for the previous year
+    const previousYearCustomerData = await User.aggregate([
+      // Match users with membership plans
+      {
+        $match: {
+          MembershipPlan: { $exists: true }
+        }
+      },
+      // Unwind the membership plans array
+      {
+        $unwind: "$MembershipPlan"
+      },
+      // Match membership plans with membership start date in previous year
+      {
+        $match: {
+          "MembershipPlan.MembershipStartDate": {
+            $gte: new Date(previousYear, 0, 1),
+            $lte: new Date(previousYear, 11, 31, 23, 59, 59, 999)
+          }
+        }
+      },
+      // Group by month and count the number of customers
+      {
+        $group: {
+          _id: { $month: "$MembershipPlan.MembershipStartDate" },
+          count: { $sum: 1 }
+        }
+      },
+      // Sort the customer data by month
+      {
+        $sort: { _id: 1 }
       }
-    },
-    // Sort the sales data by month
-    {
-      $sort: { _id: 1 }
-    }
-  ]);
+    ]);
 
-  // Convert the sales data into an array of sales for each month
-  const monthlySales = Array.from({ length: 12 }, (_, i) => {
-    const sales = salesData.find(data => data._id === i + 1);
-    return sales ? sales.sales : 0;
-  });
+    // Extract the monthly customer count for the current and previous year
+    const currentYearCustomerCount = currentYearCustomerData.map(data => data.count);
+    const previousYearCustomerCount = previousYearCustomerData.map(data => data.count);
 
-  return monthlySales;
+    // Return an array of customer counts
+    return [...currentYearCustomerCount, ...previousYearCustomerCount];
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
 };
+
 
 // Route handler for the dashboard page
 const dashboardPage = async (req, res) => {
   try {
-    // Get the current year's sales data
-    const currentYear = new Date().getFullYear();
-    const currentYearSalesData = await getMonthlySalesData(currentYear);
 
-    // Get the previous year's sales data
-    const previousYear = currentYear - 1;
-    const previousYearSalesData = await getMonthlySalesData(previousYear);
 
     // Combine the sales data for the current and previous year
-    const salesData = {
-      currentYear: currentYearSalesData,
-      previousYear: previousYearSalesData
-    };
+    const salesData = await getMonthlySalesData
 
     // Render the dashboard page with the sales data
     res.render("dashboard", { salesData });
@@ -185,6 +215,90 @@ const dashboardPage = async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 };
+
+const getMonthlySalesData = async () => {
+  try {
+    const currentYear = new Date().getFullYear();
+    const previousYear = currentYear - 1;
+
+    const currentYearSalesData = await User.aggregate([
+      {
+        $match: {
+          MembershipPlan: { $exists: true }
+        }
+      },
+      {
+        $unwind: "$MembershipPlan"
+      },
+      {
+        $match: {
+          "MembershipPlan.MembershipStartDate": {
+            $gte: new Date(currentYear, 0, 1),
+            $lte: new Date(currentYear, 11, 31, 23, 59, 59, 999)
+          }
+        }
+      },
+      {
+        $group: {
+          _id: { $month: "$MembershipPlan.MembershipStartDate" },
+          sales: { $sum: "$MembershipPlan.Price" }
+        }
+      },
+      {
+        $sort: { _id: 1 }
+      }
+    ]);
+
+    const previousYearSalesData = await User.aggregate([
+      {
+        $match: {
+          MembershipPlan: { $exists: true }
+        }
+      },
+      {
+        $unwind: "$MembershipPlan"
+      },
+      {
+        $match: {
+          "MembershipPlan.MembershipStartDate": {
+            $gte: new Date(previousYear, 0, 1),
+            $lte: new Date(previousYear, 11, 31, 23, 59, 59, 999)
+          }
+        }
+      },
+      {
+        $group: {
+          _id: { $month: "$MembershipPlan.MembershipStartDate" },
+          sales: { $sum: "$MembershipPlan.Price" }
+        }
+      },
+      {
+        $sort: { _id: 1 }
+      }
+    ]);
+
+    const monthlySalesData = Array.from({ length: 12 }, (_, i) => {
+      const currentMonthSales = currentYearSalesData.find(data => data._id === i + 1);
+      const previousMonthSales = previousYearSalesData.find(data => data._id === i + 1);
+      const currentMonthSalesValue = currentMonthSales ? currentMonthSales.sales : 0;
+      const previousMonthSalesValue = previousMonthSales ? previousMonthSales.sales : 0;
+      return currentMonthSalesValue + previousMonthSalesValue;
+    });
+
+    const currentMonth = new Date().getMonth();
+    for (let i = currentMonth + 1; i < 12; i++) {
+      monthlySalesData[i] = 0;
+    }
+
+    const salesData = monthlySalesData.map(data => data.sales);
+
+    return salesData;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};
+
 module.exports = {
   verifyLogin,
   loadDashboard,
@@ -192,7 +306,8 @@ module.exports = {
   loadtrainerDashboard,
   logout,
   getAnalysisData,
-  getMonthlySalesData,dashboardPage
+  getMonthlySalesData, dashboardPage,
+  getMonthlyCustomerData
 
 
 };

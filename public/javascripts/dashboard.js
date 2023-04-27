@@ -1,4 +1,5 @@
 // const data  = require("../../controllers/usercontroller");
+// import { getMonthlyCustomerData } from '../../controllers/usercontroller'
 // const currentYear = new Date().getFullYear();
 //     const currentYearSalesData = data.getMonthlySalesData(currentYear);
 
@@ -10,11 +11,16 @@
 
 // const salesData = JSON.parse(decodeURIComponent(document.currentScript.getAttribute('data-sales-data')));
 // const salesData = JSON.parse(decodeURIComponent("{{salesData}}"));
+// const { currentYearCustomerCount, previousYearCustomerCount } = await getMonthlyCustomerData();
 
+// const currentYearCustomerCount = monthlyCustomerData.currentYearCustomerCount;
+// const previousYearCustomerCount = monthlyCustomerData.previousYearCustomerCount;
+// console.log(currentYearCustomerCount)
+// console.log(previousYearCustomerCount)
 // BAR CHART
 var barChartOptions = {
     series: [{
-      data: [10, 8, 6, 4, 2],
+      data: [10, 8, 6, 4, 0],
       name: "data",
     }],
     chart: {
@@ -77,7 +83,7 @@ var barChartOptions = {
       theme: "dark",
     },
     xaxis: {
-      categories: ["1", "2", "3", "4", "5"],
+      categories: ["Jan", "feb", "mar", "apr", "may"],
       title: {
         style: {
           color: "#f5f7ff",
@@ -128,9 +134,11 @@ var barChartOptions = {
   var areaChartOptions = {
     series: [{
       name: "Previous year",
+      
       data: [6000,3000,5000,2000,3000,1000,2000,4000,1200,5300,2200,8400]
     }, {
       name: "Current Year",
+     
       data: [5000,2000,5000,2000,8000,1600,2500,4500,2200,3300,2200,3500]
     }],
     chart: {
