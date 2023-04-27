@@ -38,6 +38,16 @@
             <input type="hidden" name="id" value="">
             <input id="BirthDate" type="date"  name="BirthDate" value="" placeholder="mention your Birthdate">
         </div>
+         <div class="form-group">
+            <label for="MembershipPlan" class="text-light">Membership Plan Name</label>
+            <input type="hidden" name="id" value="">
+            <input type="text" name="MembershipPlan" id="MembershipPlan" value="" placeholder="montly/quaterly/yearly etc.">
+        </div>
+        <div class="form-group">
+            <label for="MembershipStartDate" class="text-light">Membership start date</label>
+            <input type="hidden" name="id" value="">
+            <input type="date" id="MembershipStartDate"  name="MembershipStartDate" value="" placeholder="mention  MembershipStartDate">
+        </div>
         <div class="form-group">
             <label for="Phone" class="text-light">Phone no.</label>
             <input type="hidden" name="id" value="">
@@ -66,7 +76,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        {{!-- <div class="form-group">
             <label for="Status" class="text-light">Status</label>
             <div class="radio inline">
                 <input type="radio" id="radio-4" name="Status" value="Active">
@@ -76,7 +86,7 @@
                 <input type="radio" id="radio-5" name="Status" value="Inactive">
                 <label for="radio-5" class="radio-label">Inactive</label>
             </div>
-        </div>
+        </div> --}}
 
         <div class="form-group">
             <button type="submit" class="btn text-dark update">Save</button>

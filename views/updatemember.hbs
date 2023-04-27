@@ -31,6 +31,7 @@
                 </div>
                 <div class="form-group">
                     <label for="email" class="text-light">Email</label>
+                    <input type="hidden" name="id" value="{{member._id}}">
                     <input id="email" type="text" name="email" value="{{member.email}}" placeholder="example@gmail.com">
                 </div>
                 <div class="form-group">
@@ -60,6 +61,16 @@
                     <input id="BirthDate" type="date"  name="BirthDate" value="{{member.BirthDate}}"
                         placeholder="mention your birthdate">
                 </div>
+                <div class="form-group">
+            <label for="MembershipStartDate" class="text-light">Membership start date</label>
+            <input type="hidden" name="id" value="{{member._id}}">
+            <input id="MembershipStartDate" type="date"  name="MembershipStartDate" value="{{member.MembershipStartDate}}" placeholder="mention  MembershipStartDate">
+        </div>
+        <div class="form-group">
+            <label for="MembershipPlan" class="text-light">Membership Plan Name</label>
+            <input type="hidden" name="id" value="{{member._id}}">
+            <input type="text" name="MembershipPlan" id="MembershipPlan" value="{{this.MembershipPlan.MembershipName}}" placeholder="montly/Quaterly/yearly etc.">
+        </div>
                 <div class="form-group">
                     <label for="Phone" class="text-light">Phone no.</label>
                     <input type="hidden" name="id" value="{{member._id}}">
@@ -95,7 +106,7 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                {{!-- <div class="form-group">
                     <label for="Status" class="text-light">Status</label>
                     <div class="radio inline">
                         {{#eq member.Status "Active"}}<input type="radio" id="radio-4" name="Status" value="Active"
@@ -111,7 +122,7 @@
                             name="Status" value="Inactive">{{/noteq}}
                         <label for="radio-5" class="radio-label">Inactive</label>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="form-group">
                     <button type="submit" class="btn text-dark update">Save</button>
@@ -125,5 +136,5 @@
 <!-- /Main Site -->
 
 {{!-- add footer --}}
-{{> _footer}}
+{{>_footer}}
 {{!-- add footer --}}

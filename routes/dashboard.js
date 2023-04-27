@@ -6,6 +6,7 @@ const Membercontroller=require("../controllers/Membercontroller");
 const Attendancecontroller=require("../controllers/attendancecontroller")
 const TrainerController=require("../controllers/Trainercontroller");
 const Membershipplancontroller=require("../controllers/plancontroller")
+
 const axios=require('axios').default;
 
 
@@ -17,9 +18,8 @@ router.use(bodyParser.urlencoded({extended: false}));
  * @description Dashboard Route
  * @method GET/
  */
-router.get('/',AdminAuth.islogin, function(req, res, next) {
-    res.render('dashboard');
-  });
+router.get('/',AdminAuth.islogin,usercontroller.dashboardPage
+);
 
 router.get('/logout',AdminAuth.islogin,usercontroller.logout);
 
@@ -182,6 +182,10 @@ router.get('/Plans/api/plans',Membershipplancontroller.FindPlan);
 router.put('/Plans/api/plans/:id',Membershipplancontroller.UpdatePlan);
 
 router.delete('/Plans/api/plans/:id',Membershipplancontroller.DeletePlan);
+
+
+// analysis
+router.get('/Analysis',usercontroller.getAnalysisData,AdminAuth.islogin);
 
 
 module.exports = router;

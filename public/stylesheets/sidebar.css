@@ -112,13 +112,13 @@
   flex-direction: column;
 }
 
-header .image-text .name {
+.sidebar header .image-text .name {
   margin-top: 2px;
   font-size: 18px;
   font-weight: 600;
 }
 
-header .image-text .profession {
+.sidebar header .image-text .profession {
   font-size: 16px;
   margin-top: -2px;
   display: block;
